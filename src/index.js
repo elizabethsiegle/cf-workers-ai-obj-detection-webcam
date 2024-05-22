@@ -15,10 +15,6 @@ const html = `
             margin: 10px;
             z-index: 1000; /* Ensure it's above other content */
         }
-        #resultsDiv {
-            max-width: 100%;
-            height: auto;
-        }
         body {
             display: flex;
             flex-direction: column;
@@ -107,6 +103,13 @@ const html = `
         // Display the results from the object detection
         function displayResults(res) {
             resultsDiv.innerHTML = JSON.stringify(res, null, 2);
+            resultsDiv.style.backgroundColor = 'purple';
+            resultsDiv.style.fontSize = '30px'; // Set font size to 30 pixels
+            resultsDiv.style.margin = '20px';
+            resultsDiv.style.padding = '20px'; // Optional: Add padding for better appearance
+            resultsDiv.style.color = 'white'; // Optional: Set text color to white for better visibility
+            resultsDiv.style.height = 'auto';
+            
         }
 
         // Display the captured image with boxes drawn around the detected objects
@@ -131,9 +134,10 @@ const html = `
                     imgContext.strokeStyle = 'red';
                     imgContext.lineWidth = 2;
                     imgContext.strokeRect(xmin, ymin, width, height);
-                    imgContext.font = '18px Arial';
+                    imgContext.font = '18px Comic-Sans';
                     imgContext.fillStyle = 'red';
-                    imgContext.fillText(detection.label, xmin, ymin > 10 ? ymin - 5 : 10);
+                    imgContext.fillText(detection.label + ': ' + detection.score.toFixed(2), xmin, (ymin > 10 ? ymin - 5 : 10));
+
                 });
                 capturedImage.src = imgCanvas.toDataURL('image/jpeg');
             };
@@ -143,7 +147,7 @@ const html = `
         setupWebcam();
     </script>
     <div class="footer">
-            <p>Built w/ 🧡 on <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a>, <a href="https://developers.cloudflare.com/workers-ai/models/" target="_blank">Cloudflare AI models</a>, <a href="https://ai.cloudflare.com" target="_blank">Workers AI</a>, in SF🌁 ➡️ <a href="https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects" target="_blank">code</a></p>
+            <p>Built w/ 🧡 on <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a>, <a href="https://developers.cloudflare.com/workers-ai/models/" target="_blank">Cloudflare AI models</a>, <a href="https://ai.cloudflare.com" target="_blank">Workers AI</a>, in SF🌁 ➡️ <a href="https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam" target="_blank">code</a></p>
         </div>
 </body>
 </html>
